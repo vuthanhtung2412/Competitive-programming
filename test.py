@@ -40,3 +40,8 @@ def interDict():
     for k,v in d.items():
         print(k)
         print(v)
+
+def testXOR():
+    for i in range(2):
+        for j in range(2):
+            print("%s xor %s = %s" % (i, j, i ^ j))

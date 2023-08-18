@@ -1,4 +1,6 @@
 def lengthOfLongestSubstring(s: str) -> int:
+    # 2 pointer
+    # try shorten AMAP as soon as we find the first duplicates
     res = 0
     curr = set()
     l = 0

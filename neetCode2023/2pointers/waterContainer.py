@@ -1,5 +1,6 @@
 from typing import List
 def maxArea(height: List[int]) -> int:
+    # Make the smaller pointer larger and check condition to update final result
     res = 0
     l = 0
     r = len(height) - 1

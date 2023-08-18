@@ -1,5 +1,6 @@
 from typing import List
 def threeSum(nums: List[int]) -> List[List[int]]:
+    # scan the whole array, 2 sum for each number scanned
     # No need to keep the index
     nums = sorted(nums)
     res = []
@@ -41,6 +42,7 @@ def threeSum(nums: List[int]) -> List[List[int]]:
 
         i += 1
 
+        # skip duplicate
         while nums[i] == nums[i - 1] and i < len(nums) - 2:
             i += 1
 

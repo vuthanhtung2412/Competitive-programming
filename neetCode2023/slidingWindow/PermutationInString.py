@@ -1,4 +1,6 @@
 def checkInclusion(s1: str, s2: str) -> bool:
+    # 2 pointer
+    # if contain all character try to shorten it AMAP
     d = {}
     l1 = len(s1)
     l2 = len(s2)

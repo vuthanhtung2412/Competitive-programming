@@ -48,6 +48,7 @@ def myEvalRPN(tokens: List[str]) -> int:
 
 
 def NCEvalRPN(tokens: List[str]) -> int:
+    # LIFO wait until an operator appear
     stack = []
     for c in tokens:
         if c == "+":

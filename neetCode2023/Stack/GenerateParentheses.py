@@ -4,7 +4,7 @@
 from typing import List
 
 
-def generateParenthesis(n: int) -> List[str]:
+def myGenerateParenthesis(n: int) -> List[str]:
     res = []
     stack = ["("]
     opens = n - 1
@@ -39,4 +39,27 @@ def generateParenthesis(n: int) -> List[str]:
     return res
 
 
-print(generateParenthesis(3))
+def NEGenerateParenthesis(n: int) -> List[str]:
+    # same but don't use nonlocal variable
+    stack = []
+    res = []
+
+    def backtrack(openN, closedN):
+        if openN == closedN == n:
+            res.append("".join(stack))
+            return
+
+        if openN < n:
+            stack.append("(")
+            backtrack(openN + 1, closedN)
+            stack.pop()
+        if closedN < openN:
+            stack.append(")")
+            backtrack(openN, closedN + 1)
+            stack.pop()
+
+    backtrack(0, 0)
+    return res
+
+
+print(myGenerateParenthesis(3))

@@ -1,4 +1,5 @@
 def isValid(s: str) -> bool:
+    # LIFO pop only when match the last element
     opens = {'(', '{', '['}
     closes = {')', '}', ']'}
     stack = []

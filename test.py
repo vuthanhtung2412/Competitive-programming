@@ -1,4 +1,6 @@
 import copy
+import math
+from functools import reduce
 
 
 def testEncodingChar():
@@ -75,6 +77,7 @@ def customSort():
     l = sorted(l, key=lambda x: (x[0], x[1]))
     print(l)
 
+
 def mutableString():
     """Mutable string for concatenation O(n) instead of O(m+n)"""
     # TODO : implement a mutable string
@@ -115,3 +118,17 @@ def iterateReversed():
     print("-----")
     for i in reversed(range(10)):
         print(i)
+
+
+def testReduce():
+    arr = [3, 6, 7, 11]
+
+    time = 0
+    for b in arr:
+        time += math.ceil(b / 6)
+    print(time)  # 6
+
+    print(reduce(lambda x, y: math.ceil(x / 6) + math.ceil(y / 6), arr))  # 3
+    # explanation
+    # they reduce the result of previous reduction
+    # ceil((ceil((ceil(3/6) + ceil(6/6)) / 6) + ceil(7/6)) / 6) + ceil(11/6)

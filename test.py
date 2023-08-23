@@ -132,3 +132,5 @@ def testReduce():
     # explanation
     # they reduce the result of previous reduction
     # ceil((ceil((ceil(3/6) + ceil(6/6)) / 6) + ceil(7/6)) / 6) + ceil(11/6)
+
+# Complexity of len() function is O(1)

@@ -2,6 +2,7 @@ from typing import List
 
 
 def search(nums: List[int], target: int) -> int:
+    # more complex condition to decide which side to search
     l = 0
     r = len(nums) - 1
     while l <= r:
@@ -12,7 +13,7 @@ def search(nums: List[int], target: int) -> int:
             return l
         if nums[r] == target:
             return r
-        # NOTE : split case in the most intuitive way
+        # NOTE : split case in the most intuitive way (in this prob we can determine the relative position of swap and mid)
         # determine if mid is in the left or right portion of the array first
         elif nums[l] <= nums[mid]:  # left
             if nums[l] < target < nums[mid]:

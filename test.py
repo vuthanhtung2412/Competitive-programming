@@ -10,20 +10,51 @@ def testEncodingChar():
 
 def deepShallowCopy():
     # Original nested list
-    original_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9]]
+    original_list = [[1, 2, 3], [4, 5, 6], [7, 8, 9], (4, 6, 9), "dmm", 9]
 
     # Shallow copy
     shallow_copied_list = copy.copy(original_list)
+    ref_2_original_obj = original_list # different from shallow copy
     # shallow_copied_list = copy.copy(original_list)
 
     # Deep copy
     deep_copied_list = copy.deepcopy(original_list)
 
     # check id (address in heap)
+
+    print("test list obj (mutable/non primitive)")
     print(id(original_list[0][0]) == id(shallow_copied_list[0][0]))
     print(id(original_list[0]) == id(shallow_copied_list[0]))
     print(id(original_list[0][0]) == id(deep_copied_list[0][0]))
     print(id(original_list[0]) == id(deep_copied_list[0]))
+
+    print("test tuple (non primitive / non mutable)")
+    print(id(original_list[3]) == id(deep_copied_list[3]))
+    print(id(original_list[3]) == id(shallow_copied_list[3]))
+    original_list[3] = (3, 4)
+    print(id(original_list[3]) == id(deep_copied_list[3]))
+    print(id(original_list[3]) == id(shallow_copied_list[3]))
+
+    print("test string (primitive / non mutable")
+    print(id(original_list[4]) == id(deep_copied_list[4]))
+    print(id(original_list[4]) == id(shallow_copied_list[4]))
+    original_list[4] = "dep trai"
+    print(id(original_list[4]) == id(deep_copied_list[4]))
+    print(id(original_list[4]) == id(shallow_copied_list[4]))
+
+    print("test int (primitive / non mutable)")
+    print(id(original_list[5]) == id(deep_copied_list[5]))
+    print(id(original_list[5]) == id(shallow_copied_list[5]))
+    original_list[5] = 10
+    print(id(original_list[5]) == id(deep_copied_list[5]))
+    print(id(original_list[5]) == id(shallow_copied_list[5]))
+
+    # For both shallow and deep copy
+    # new NON MUTABLE obj will be created if change in original list happen
+
+    # for deep copy
+    # new MUTABLE obj will be created at the time of initialization of new list, dict, set
+    # shallow copy only take the address of mutable obj
 
     # Modify the original list
     original_list[0][0] = 100
@@ -134,3 +165,22 @@ def testReduce():
     # ceil((ceil((ceil(3/6) + ceil(6/6)) / 6) + ceil(7/6)) / 6) + ceil(11/6)
 
 # Complexity of len() function is O(1)
+
+def checkKeyExist():
+    dic = {}
+    if "key" in dic:
+        print("key existed")
+    else:
+        print("key non existing")
+
+    try:
+        if dic["key"]:
+            print(dic["key"])
+        else:
+            print(None)
+    except KeyError:
+        print("key error")
+
+def testTryCatch():
+    # TODO
+    pass

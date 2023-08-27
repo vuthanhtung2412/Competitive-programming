@@ -1,6 +1,7 @@
 import copy
 import math
 from functools import reduce
+from typing import List
 
 
 def testEncodingChar():
@@ -14,7 +15,7 @@ def deepShallowCopy():
 
     # Shallow copy
     shallow_copied_list = copy.copy(original_list)
-    ref_2_original_obj = original_list # different from shallow copy
+    ref_2_original_obj = original_list  # different from shallow copy
     # shallow_copied_list = copy.copy(original_list)
 
     # Deep copy
@@ -164,6 +165,7 @@ def testReduce():
     # they reduce the result of previous reduction
     # ceil((ceil((ceil(3/6) + ceil(6/6)) / 6) + ceil(7/6)) / 6) + ceil(11/6)
 
+
 # Complexity of len() function is O(1)
 
 def checkKeyExist():
@@ -181,6 +183,40 @@ def checkKeyExist():
     except KeyError:
         print("key error")
 
+
 def testTryCatch():
     # TODO
     pass
+
+
+arr = [x for x in range(10)]
+
+
+def testRefOrCopy(l: List[int]):  # pass reference instead of a copy
+    l[8] = 2
+
+
+# testRefOrCopy(arr)
+# print(arr)
+
+def testForModif():
+
+    a = [1, 2, 3, 4, 5]
+    for i in a:
+        # miss number 3 because the rest of the array after 2 is shifted
+        # i is a pointer to the memory
+        print(i)
+        if i == 2:
+            a.remove(i)
+
+    a = [i for i in range(10)]
+    print("--------------")
+    for i in range(len(a)):  # len(a) returns an integer
+        print(a[i])  # index error
+        if a[i] == 3 or a[i] == 6:
+            a.pop(i)
+
+    print(a)
+
+
+testForModif()

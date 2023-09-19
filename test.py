@@ -237,6 +237,18 @@ def dotProductVsMatmul():
     c = np.matmul(a, b)
     print(c)
     print(c.shape)  # (9, 8, 6, 4)
+
+    try:
+        a = np.full((9, 8, 6, 3, 9), 1)
+        b = np.full((9, 8, 3, 4, 9), 1)
+        c = np.matmul(a, b)
+        print(c)
+    except:
+        print("this bug")
     # flatten other dimension except for the last 2 we then obtain a stack of matrix, perform matrix multiplication accordingly then reshape
 
-dotProductVsMatmul()
+
+def filterWLiComprehension():
+    print([num ** 2 for num in range(10) if num % 2 == 0])
+
+filterWLiComprehension()

@@ -5,6 +5,7 @@ def coinChange(coins: List[int], amount: int) -> int:
     # first thought : can we be greedy (counter proof with example [1,3,4,5] amount = 7)
     # second thought : DFS + backtracking
     # memoization to reduce number of repeated calculation
+    # cover all cases possible by subtracting coins from amount
     d = {}
     for c in coins:
         d[c] = 1
@@ -32,6 +33,7 @@ def coinChange(coins: List[int], amount: int) -> int:
 
 def NCCoinChange(coins: List[int], amount: int) -> int:
     # bottom up dynamic programing aproach, keep track of 0 -> amount
+    # cover all cases that amount can have (0 -> amount)
     if amount == 0:
         return 0
     dp = [-1] * (amount+1)

@@ -43,7 +43,7 @@ def mergeKLists(self, lists: List[Optional[ListNode]]) -> Optional[ListNode]:
             mi = lists[i].val
             res = lists[i]
 
-    res = ListNode(-1e4, res)
+    res = ListNode( int(-1e4), res)
     curr = res
 
     while lists:

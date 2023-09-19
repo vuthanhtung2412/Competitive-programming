@@ -200,7 +200,6 @@ def testRefOrCopy(l: List[int]):  # pass reference instead of a copy
 # print(arr)
 
 def testForModif():
-
     a = [1, 2, 3, 4, 5]
     for i in a:
         # miss number 3 because the rest of the array after 2 is shifted
@@ -219,4 +218,25 @@ def testForModif():
     print(a)
 
 
-testForModif()
+# testForModif()
+
+import numpy as np
+
+
+def dotProductVsMatmul():
+    a = np.full((9, 3, 6, 3), 1)
+    b = np.full((7, 8, 3, 5), 1)
+    d = np.dot(a, b)
+
+    print(d)
+    print(d.shape)  # (9, 3, 6, 7, 8, 5)
+    # 1 a.shape[-1]-D vector of matrix a matmul with a matrix of dim b.shape[-2]*b.shape[-1] then stack subsequently by other dimension of b then a
+
+    a = np.full((9, 8, 6, 3), 1)
+    b = np.full((9, 8, 3, 4), 1)
+    c = np.matmul(a, b)
+    print(c)
+    print(c.shape)  # (9, 8, 6, 4)
+    # flatten other dimension except for the last 2 we then obtain a stack of matrix, perform matrix multiplication accordingly then reshape
+
+dotProductVsMatmul()

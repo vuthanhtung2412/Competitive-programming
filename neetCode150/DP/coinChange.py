@@ -31,19 +31,20 @@ def coinChange(coins: List[int], amount: int) -> int:
 
     return minCoin(amount)
 
+
 def NCCoinChange(coins: List[int], amount: int) -> int:
-    # bottom up dynamic programing aproach, keep track of 0 -> amount
+    # bottom up dynamic programing approach, keep track of 0 -> amount
     # cover all cases that amount can have (0 -> amount)
     if amount == 0:
         return 0
-    dp = [-1] * (amount+1)
+    dp = [-1] * (amount + 1)
     dp[0] = 0
-    for i in range(1,amount+1):
+    for i in range(1, amount + 1):
         for c in coins:
-            if i-c >= 0 and dp[i-c] != -1:
+            if i - c >= 0 and dp[i - c] != -1:
                 if dp[i] == -1:
-                    dp[i] = dp[i-c] + 1
-                elif dp[i] > dp[i-c] + 1:
-                    dp[i] = dp[i-c] + 1
+                    dp[i] = dp[i - c] + 1
+                elif dp[i] > dp[i - c] + 1:
+                    dp[i] = dp[i - c] + 1
     print(dp)
     return dp[-1]

@@ -251,4 +251,68 @@ def dotProductVsMatmul():
 def filterWLiComprehension():
     print([num ** 2 for num in range(10) if num % 2 == 0])
 
-filterWLiComprehension()
+
+# deque.popleft() is O(1) -- a constant time operation. While list.pop(0) is O(n)
+def dequePython():
+    pass
+
+
+import re
+
+
+def regex():
+    # Example input string
+    input_string = "My email address is john.doe@example.com, and my phone number is 123-456-7890."
+
+    # Define a regex pattern with capturing groups
+    # "r" in front of a string literal, it indicates a raw string. A raw string is a string that treats backslashes (\) as literal characters and not as escape characters.
+    email_pattern = r'([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})'
+    phone_pattern = r'(\d{3})-(\d{3}-\d{4})'
+
+    # Use re.findall to extract matches
+    emails = re.findall(email_pattern, input_string)
+    phones = re.findall(phone_pattern, input_string)
+
+    # Print a list of extracted variables
+    print("Emails:", emails)
+    # ['john.doe@example.com'] because there is only one big group
+    print("Phone numbers:", phones)
+    # return [('123', '456-7890')] tuples of groups
+
+    # LAZY matching
+    string = "aabqekjlkjavabdfabb"
+    pattern = r"a.*?b"
+    res = re.findall(pattern, string)
+    print(res)
+
+    # LOOKAHEAD & LOOKBEHIND
+    string = "abc123"
+    pattern = r"(?<=[A-Za-z])\d+"
+    res = re.findall(pattern, string)
+    print(res)
+
+    string = "123456"
+    pattern = "\d?(?=\d{4})"
+    res = re.findall(pattern, string)
+    print(res)
+
+    # GROUPs
+
+    # Use re.search to find the first match
+    match = re.search(phone_pattern, input_string)
+
+    if match:
+        # print the whole sequence
+        print(match.group(0))
+
+        # Extract the first 3 numbers into one variable
+        print(match.group(1))
+
+        # Extract the other 7 numbers into another variable
+        print(match.group(2))
+
+
+regex()
+
+from drawtree import draw_level_order
+draw_level_order('[4,-7,-3,#,#,-9,-3,9,-7,-4,#,6,#,-6,-6,#,#,0,6,5,#,9,#,#,-1,-4,#,#,#,-2]')

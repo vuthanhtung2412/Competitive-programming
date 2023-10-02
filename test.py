@@ -312,7 +312,16 @@ def regex():
         print(match.group(2))
 
 
-regex()
-
 from drawtree import draw_level_order
-draw_level_order('[4,-7,-3,#,#,-9,-3,9,-7,-4,#,6,#,-6,-6,#,#,0,6,5,#,9,#,#,-1,-4,#,#,#,-2]')
+
+
+def draw_tree():
+    draw_level_order('[4,-7,-3,#,#,-9,-3,9,-7,-4,#,6,#,-6,-6,#,#,0,6,5,#,9,#,#,-1,-4,#,#,#,-2]')
+
+
+def nonIntLoop():
+    for i in range(1, 10, 3):
+        print(i)
+
+
+nonIntLoop()

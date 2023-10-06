@@ -3,7 +3,7 @@ from typing import List
 
 
 def wordBreak(s: str, wordDict: List[str]) -> bool:
-    # wordBreak(s) = reduce(or, [wordBreak(s[:-len(w)]) for w in wordDict])
+    # wordBreak(s) = reduce(or, [wordBreak(s[:-len(w)]) and s[:-len(w)] == w for w in wordDict])
     # bottom up approach
     res = [False for _ in range(len(s) + 1)]
     res[0] = True

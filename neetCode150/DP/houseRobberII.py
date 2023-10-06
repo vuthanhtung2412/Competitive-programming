@@ -116,7 +116,8 @@ def rob2(nums: List[int]) -> int:
 
 # Neetcode solution : linRob on 2 array nums[1:] and nums[:-1]
 # because we cannot rob the first and the last house together
-
+# I haven't thought of this problem because I think if I exclude the first element the robbed house might not adjacent to the first house
+# However, if Neetcode solution misses this case the chosen house must also contain the last house else it will be covered in the excluded last case
 def NCrob(nums: List[int]) -> int:
     # exclude the first element
     # exclude the last element

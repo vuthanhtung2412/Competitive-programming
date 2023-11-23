@@ -2,6 +2,7 @@ import copy
 import math
 from functools import reduce
 from typing import List
+import pandas as pd
 
 
 def testEncodingChar():
@@ -324,4 +325,56 @@ def nonIntLoop():
         print(i)
 
 
-nonIntLoop()
+def testComplexNum():
+    z = 3 + 4j
+    print(type(z))  # class complex
+    print(z.conjugate())
+
+
+def tienTest():
+    # IN = input('enter name of csv file')
+    df = pd.read_csv("file.csv")
+    print(df)
+
+    # Total revenue
+    print("-----------TOTAL REVENUE------------")
+    print("Total revenue")
+    df["Total"] = df["Quantity"] * df["Price"]
+    print(df["Total"].agg("sum"))
+
+    # average revenue
+    print("-----------AVG REVENUE------------")
+    gb = df.groupby("Product")
+    print(type(gb))
+    for key, item in gb:
+        print(gb.get_group(key), "\n\n")
+
+    avg_tot_rev_n_sales = gb[["Quantity", "Total"]].agg(
+        tot_rev_by_prod=pd.NamedAgg(column="Total", aggfunc="sum"),
+        nb_sales_by_prod=pd.NamedAgg(column="Quantity", aggfunc="sum"))
+
+    avg_tot_rev_n_sales["avg_rev_by_prod"] = avg_tot_rev_n_sales["tot_rev_by_prod"] / avg_tot_rev_n_sales[
+        "nb_sales_by_prod"]
+
+    print(avg_tot_rev_n_sales)
+
+    # Include total number of sales in this apply
+    print("-----------TEST AGGREGATOR------------")
+    test_agg = gb.agg(['sum', 'min'])
+    print(type(test_agg))
+    print(test_agg.columns)
+    print(test_agg.index)
+    print(test_agg)
+
+    # number of sales for product that surpass the revenue threshold
+    print("-----------NUMBER OF SALES W REVENUE THRESHOLD------------")
+    # threshold = input("rev per product above threshold")
+    threshold = 50
+    perf_prod = avg_tot_rev_n_sales[["avg_rev_by_prod", "nb_sales_by_prod"]]
+    perf_prod = perf_prod[perf_prod["avg_rev_by_prod"] >= threshold]["nb_sales_by_prod"]
+    print(perf_prod)
+
+    # notes:
+    # Aggregate should only operate on one column then we can process the aggregated information later
+
+tienTest()

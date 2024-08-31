@@ -8,6 +8,7 @@ func main() {
 	fmt.Println(trap([]int{4, 2, 0, 3, 2, 5}))
 }
 
+// waterTrapped[i]=min(maxL[i], maxR[i]) - heigth[i]
 func trap(height []int) int {
 	maxL := make([]int, len(height))
 	maxR := make([]int, len(height))

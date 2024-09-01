@@ -30,3 +30,5 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 	}
 	return float64(mergedArray[len(mergedArray)/2]+mergedArray[len(mergedArray)/2-1]) / 2
 }
+
+// TODO : Binary search approach

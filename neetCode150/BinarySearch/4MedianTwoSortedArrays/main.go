@@ -3,8 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(findMedianSortedArrays([]int{1, 3}, []int{2}))
-	fmt.Println(findMedianSortedArrays([]int{1, 2, 5, 5, 8}, []int{3, 4, 6, 9, 10}))
+	fmt.Println(findMedianSortedArrays2([]int{1, 3}, []int{2}))
+	fmt.Println(findMedianSortedArrays2([]int{1, 2, 5, 5, 8}, []int{3, 4, 6, 9, 10}))
+	fmt.Println(findMedianSortedArrays2([]int{1, 2}, []int{3, 4}))
+	fmt.Println(findMedianSortedArrays2([]int{3}, []int{-2, -1}))
+	fmt.Println(findMedianSortedArrays2([]int{1}, []int{1}))
+	fmt.Println(findMedianSortedArrays2([]int{}, []int{1, 2}))
+	fmt.Println(findMedianSortedArrays2([]int{1}, []int{2, 3}))
+	fmt.Println(findMedianSortedArrays2([]int{1, 2, 3, 4, 5, 6}, []int{1}))
 }
 
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
@@ -32,3 +38,120 @@ func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
 }
 
 // TODO : Binary search approach
+// Insights smaller (left) half and greater (right) half
+// Partition 2 array each into a left subarray and right subarray : l1, r1, l2, r2
+// Constraints
+// len(l1) + len(l2) = len(r1) + len(r2) (+1) => len(l1) + len(l2) = len(nums1) + len(nums2)
+// l1[-1] < r1[0] & r2[0] ; l2[-1] < r1[0] & r2[0]
+// Edge case :
+// + len(l1) >= half
+// + len(l1) = 0
+// + len(l1) + len(nums2) < half
+// In context of this many edge cases it might worth try adding a lower to the beginning of the array and upper limit the end
+func findMedianSortedArrays1(nums1 []int, nums2 []int) float64 {
+	l, r := 0, len(nums1) // lower and upper bound of number of element in l1 partition
+	half := (len(nums1) + len(nums2)) / 2
+	isEven := (len(nums1)+len(nums2))%2 == 0
+	nums1 = append(append([]int{-1e6 - 1}, nums1...), 1e6+1) // O(n)
+	nums2 = append(append([]int{-1e6 - 1}, nums2...), 1e6+1) // O(n)
+	var m int
+	for l <= r {
+		m = (l + r) / 2
+		if m > half {
+			r = m
+			continue
+		}
+		if half-m > len(nums2)-2 {
+			l = m + 1
+			continue
+		}
+		if nums1[m] >= nums2[half-m+1] {
+			r = m
+			continue
+		}
+		if nums1[m] <= nums2[half-m+1] && nums1[m+1] >= nums2[half-m] {
+			break
+		}
+		l = m + 1
+	}
+	fmt.Printf("mid point : %d\n", m)
+	if isEven {
+		return float64(max(nums1[m], nums2[half-m])+min(nums1[m+1], nums2[half-m+1])) / 2
+	}
+	return float64(min(nums1[m+1], nums2[half-m+1]))
+}
+
+// 2 pointer
+func findMedianSortedArrays2(nums1 []int, nums2 []int) float64 {
+	isEven := (len(nums1)+len(nums2))%2 == 0
+	if len(nums2) == 0 {
+		if isEven {
+			return float64(nums1[len(nums1)/2]+nums1[len(nums1)/2-1]) / 2
+		}
+		return float64(nums1[len(nums1)/2])
+	}
+	if len(nums1) == 0 {
+		if isEven {
+			return float64(nums2[len(nums2)/2]+nums2[len(nums2)/2-1]) / 2
+		}
+		return float64(nums2[len(nums2)/2])
+	}
+	half := (len(nums1) + len(nums2)) / 2
+	h1, h2 := 0, 0
+	for h1 < len(nums1) && h2 < len(nums2) {
+		if nums1[h1] <= nums2[h2] {
+			h1++
+		} else {
+			h2++
+		}
+		if h1+h2 == half {
+			break
+		}
+	}
+	if h1 == len(nums1) {
+		h2 = half - h1
+	} else if h2 == len(nums2) {
+		h1 = half - h2
+	}
+
+	if h1 == 0 && h2 == len(nums2) {
+		if isEven {
+			return float64(nums2[len(nums2)-1]+nums1[0]) / 2
+		}
+		return float64(max(nums2[len(nums2)-1], nums1[0]))
+	}
+	if h2 == 0 && h1 == len(nums1) {
+		if isEven {
+			return float64(nums1[len(nums1)-1]+nums2[0]) / 2
+		}
+		return float64(max(nums1[len(nums1)-1], nums2[0]))
+	}
+	if h1 == 0 {
+		if isEven {
+			return float64(min(nums1[0], nums2[h2])+nums2[h2-1]) / 2
+		}
+		return float64(min(nums1[0], nums2[h2]))
+	}
+	if h2 == 0 {
+		if isEven {
+			return float64(min(nums2[0], nums1[h1])+nums1[h1-1]) / 2
+		}
+		return float64(min(nums2[0], nums1[h1]))
+	}
+	if h1 == len(nums1) {
+		if isEven {
+			return float64(max(nums1[len(nums1)-1], nums2[h2-1])+nums2[h2]) / 2
+		}
+		return float64(nums2[h2])
+	}
+	if h2 == len(nums2) {
+		if isEven {
+			return float64(max(nums2[len(nums2)-1], nums1[h1-1])+nums1[h1]) / 2
+		}
+		return float64(nums1[h1])
+	}
+	if isEven {
+		return float64(max(nums2[h2-1], nums1[h1-1])+min(nums2[h2], nums1[h1])) / 2
+	}
+	return float64(min(nums1[h1], nums2[h2]))
+}

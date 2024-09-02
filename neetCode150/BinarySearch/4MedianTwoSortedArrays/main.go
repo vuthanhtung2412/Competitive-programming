@@ -3,14 +3,14 @@ package main
 import "fmt"
 
 func main() {
-	fmt.Println(findMedianSortedArrays2([]int{1, 3}, []int{2}))
-	fmt.Println(findMedianSortedArrays2([]int{1, 2, 5, 5, 8}, []int{3, 4, 6, 9, 10}))
-	fmt.Println(findMedianSortedArrays2([]int{1, 2}, []int{3, 4}))
-	fmt.Println(findMedianSortedArrays2([]int{3}, []int{-2, -1}))
-	fmt.Println(findMedianSortedArrays2([]int{1}, []int{1}))
-	fmt.Println(findMedianSortedArrays2([]int{}, []int{1, 2}))
-	fmt.Println(findMedianSortedArrays2([]int{1}, []int{2, 3}))
-	fmt.Println(findMedianSortedArrays2([]int{1, 2, 3, 4, 5, 6}, []int{1}))
+	fmt.Println(findMedianSortedArrays3([]int{1, 3}, []int{2}))
+	fmt.Println(findMedianSortedArrays3([]int{1, 2, 5, 5, 8}, []int{3, 4, 6, 9, 10}))
+	fmt.Println(findMedianSortedArrays3([]int{1, 2}, []int{3, 4}))
+	fmt.Println(findMedianSortedArrays3([]int{3}, []int{-2, -1}))
+	fmt.Println(findMedianSortedArrays3([]int{1}, []int{1}))
+	fmt.Println(findMedianSortedArrays3([]int{}, []int{1, 2}))
+	fmt.Println(findMedianSortedArrays3([]int{1}, []int{2, 3}))
+	fmt.Println(findMedianSortedArrays3([]int{1, 2, 3, 4, 5, 6}, []int{1}))
 }
 
 func findMedianSortedArrays(nums1 []int, nums2 []int) float64 {
@@ -154,4 +154,79 @@ func findMedianSortedArrays2(nums1 []int, nums2 []int) float64 {
 		return float64(max(nums2[h2-1], nums1[h1-1])+min(nums2[h2], nums1[h1])) / 2
 	}
 	return float64(min(nums1[h1], nums2[h2]))
+}
+
+const (
+	s int = -1e6 - 1 // smallest
+	b int = 1e6 + 1  // biggest
+)
+
+func cmpPartition(l1, l2, r1, r2 []int, even bool) (int, float64) {
+	var s1, s2, b1, b2 int
+	if len(l1) == 0 {
+		s1 = s
+	} else {
+		s1 = l1[len(l1)-1]
+	}
+
+	if len(l2) == 0 {
+		s2 = s
+	} else {
+		s2 = l2[len(l2)-1]
+	}
+
+	if len(r1) == 0 {
+		b1 = b
+	} else {
+		b1 = r1[0]
+	}
+
+	if len(r2) == 0 {
+		b2 = b
+	} else {
+		b2 = r2[0]
+	}
+
+	if s1 > b2 {
+		return -1, 0 // Search left
+	}
+	if s1 <= b2 && s2 <= b1 {
+		if even {
+			return 0, float64(max(s1, s2)+min(b1, b2)) / 2
+		}
+		return 0, float64(min(b1, b2))
+	}
+	return 1, 0 // search right
+}
+
+func findMedianSortedArrays3(nums1 []int, nums2 []int) float64 {
+	l, r := 0, len(nums1) // lower and upper bound of number of element in l1 partition
+	half := (len(nums1) + len(nums2)) / 2
+	even := (len(nums1)+len(nums2))%2 == 0
+	var m int // l <= m <= r
+	var res float64
+	for l <= r {
+		m = (l + r) / 2
+		fmt.Printf("l : %d, r : %d, m : %d\n", l, r, m)
+		if m > half {
+			r = m
+			continue
+		}
+		if half-m > len(nums2) {
+			l = m + 1
+			continue
+		}
+		i, f := cmpPartition(nums1[:m], nums2[:half-m], nums1[m:], nums2[half-m:], even)
+		if i == 0 {
+			fmt.Println("hit")
+			res = f
+			break
+		}
+		if i == -1 {
+			r = m
+			continue
+		}
+		l = m + 1
+	}
+	return res
 }

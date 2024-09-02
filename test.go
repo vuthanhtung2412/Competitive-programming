@@ -7,7 +7,7 @@ import (
 
 func main() {
 	fmt.Println("this is a test")
-	testFloat()
+	sliceMemAddress()
 }
 
 func capVsSize() {
@@ -19,11 +19,12 @@ func capVsSize() {
 	fmt.Println(cap(arr2))
 }
 
-func slicingArray() {
+func sliceMemAddress() {
 	a := make([]int, 5)
 	subA := a[3:]
 	fmt.Printf("%p\n", &a[0])
 	fmt.Printf("%p\n", &subA[0])
+	arrAsParam(subA)
 	// Get the pointers to the first elements of a and subA
 	ptrA := unsafe.Pointer(&a[0])
 	ptrSubA := unsafe.Pointer(&subA[0])
@@ -35,6 +36,25 @@ func slicingArray() {
 	fmt.Println(addressSubA - addressA) // facilitate reading the difference of hexadecimal address
 }
 
+func arrAsParam(a []int) {
+	fmt.Printf("%p\n", &a[0])
+}
+
 func testFloat() {
 	fmt.Println(float64(1+2) / 2)
+}
+
+func arrayPartition() {
+	a := make([]int, 5)
+	for i := range a {
+		a[i] = i
+	}
+	fmt.Println(a[0:0])
+	fmt.Println(a[1:4])
+	fmt.Println(a[0:5])
+	fmt.Println(a[5:])
+	fmt.Println(a[0:1])
+	b := make([]int, 0, 3)
+	fmt.Println(b[:0])
+	fmt.Println(b[0:])
 }

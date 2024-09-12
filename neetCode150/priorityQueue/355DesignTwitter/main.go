@@ -76,7 +76,7 @@ func main() {
 // A lot of followee, read more -> push based
 // When unfollow user must pull more tweets
 
-// ATTEMPT TO DO A PUSH BASED SOLUTION
+// PUSH BASED SOLUTION
 const (
 	feedSize = 10
 )
@@ -183,7 +183,7 @@ func (t *Twitter) Unfollow(followerId, followeeId int) { //O(#followee*feedSize)
 	delete(follower.followees, followeeId)
 
 	// regenerate feed of follower O(#followee*feedSize)
-	newFeed := make(MinHeap, 0, feedSize)
+	newFeed := make(MinHeap, feedSize)
 	ff := follower.followees
 	ps := make([]struct{ f, i int }, 0, len(follower.followees)) // index to followee tweets
 	for k := range ff {
@@ -195,14 +195,15 @@ func (t *Twitter) Unfollow(followerId, followeeId int) { //O(#followee*feedSize)
 			i: len(t.userBase[k].tweets) - 1,
 		})
 	}
-	for !allNegative(ps) && len(newFeed) < feedSize {
+	i := 9
+	for !allNegative(ps) && i >= 0 {
 		minId := -1
 		var mrEpoch uint // most recent epoch
 		for i := range ps {
 			if ps[i].i < 0 {
 				continue
 			}
-			if t.userBase[ps[i].f].tweets[ps[i].i].epoch < mrEpoch {
+			if t.userBase[ps[i].f].tweets[ps[i].i].epoch > mrEpoch {
 				minId = i
 				mrEpoch = t.userBase[ps[i].f].tweets[ps[i].i].epoch
 			}
@@ -210,7 +211,8 @@ func (t *Twitter) Unfollow(followerId, followeeId int) { //O(#followee*feedSize)
 		if minId == -1 {
 			break
 		}
-		newFeed = append(newFeed, t.userBase[ps[minId].f].tweets[ps[minId].i])
+		newFeed[i] = t.userBase[ps[minId].f].tweets[ps[minId].i]
+		i--
 		ps[minId] = struct {
 			f int
 			i int
@@ -219,7 +221,7 @@ func (t *Twitter) Unfollow(followerId, followeeId int) { //O(#followee*feedSize)
 			i: ps[minId].i - 1,
 		}
 	}
-	follower.feeds = newFeed
+	follower.feeds = newFeed[i+1:]
 }
 
 func allNegative(ps []struct{ f, i int }) bool {

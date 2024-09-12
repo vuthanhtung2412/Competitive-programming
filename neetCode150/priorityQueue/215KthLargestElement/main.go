@@ -40,3 +40,5 @@ func findKthLargest(nums []int, k int) int {
 	}
 	return h[0]
 }
+
+// fixed size heap solution and check escape analysis

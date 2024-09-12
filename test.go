@@ -7,7 +7,7 @@ import (
 
 func main() {
 	fmt.Println("this is a test")
-	sliceMemAddress()
+	emptySliceHeader()
 }
 
 func capVsSize() {
@@ -58,3 +58,13 @@ func arrayPartition() {
 	fmt.Println(b[:0])
 	fmt.Println(b[0:])
 }
+
+func emptySliceHeader() {
+	var arr []int
+	fmt.Println(len(arr))
+	fmt.Println(cap(arr))
+	arr = append(arr, 2)
+	fmt.Println(arr)
+}
+
+func copyArray() {}

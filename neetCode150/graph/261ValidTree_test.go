@@ -20,6 +20,7 @@ func validTree(n int, edges [][]int) bool {
 		parents[i] = i
 	}
 
+	// declaration and implementation need to be separated for inner recursive function
 	var find func(i int) int
 	find = func(i int) int {
 		if parents[i] == i {
@@ -28,8 +29,7 @@ func validTree(n int, edges [][]int) bool {
 		return find(parents[i])
 	}
 
-	var union func(i, j int) bool
-	union = func(i, j int) bool { // if looped or not
+	union := func(i, j int) bool { // if looped or not
 		pi := find(i)
 		pj := find(j)
 		if pi == pj {

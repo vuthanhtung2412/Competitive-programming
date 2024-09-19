@@ -33,8 +33,7 @@ func maxAreaOfIsland(grid [][]int) int {
 	visited := map[int]struct{}{}
 	q := newDeque(h * w)
 
-	var bfs func(i, j int)
-	bfs = func(i, j int) {
+	bfs := func(i, j int) {
 		a := 0
 		q.pushBack(w*i + j)
 		for {

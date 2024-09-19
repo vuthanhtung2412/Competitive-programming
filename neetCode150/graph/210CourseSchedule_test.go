@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func Test(t *testing.T) {
+func Test210(t *testing.T) {
 	fmt.Println(findOrder1(2, [][]int{
 		{1, 0},
 	}))

@@ -1,7 +1,6 @@
-package graph
+package main
 
 import (
-	"errors"
 	"fmt"
 	"testing"
 )
@@ -78,41 +77,4 @@ func maxAreaOfIsland(grid [][]int) int {
 	}
 
 	return res
-}
-
-var (
-	errFull  = errors.New("deque full")
-	errEmpty = errors.New("deuqe empty")
-)
-
-type deque struct {
-	// head (front) and tail (back)
-	items []int
-	head  int
-	len   int
-}
-
-func newDeque(size int) deque {
-	return deque{
-		items: make([]int, size),
-	}
-}
-
-func (d *deque) pushBack(num int) error {
-	if len(d.items) <= d.len {
-		return errFull
-	}
-	d.items[(d.head+d.len)%len(d.items)] = num
-	d.len++
-	return nil
-}
-
-func (d *deque) popFront() (int, error) {
-	if d.len == 0 {
-		return 0, errEmpty
-	}
-	res := d.items[d.head]
-	d.head = (d.head + 1) % len(d.items)
-	d.len--
-	return res, nil
 }

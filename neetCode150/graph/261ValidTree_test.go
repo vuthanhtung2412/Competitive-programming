@@ -14,6 +14,7 @@ func Test261(t *testing.T) {
 func validTree(n int, edges [][]int) bool {
 	// the main point is that there should only be 1 connected component
 	// and no loop
+	// submited on neetcode
 	parents := make([]int, n)
 	for i := range parents {
 		parents[i] = i

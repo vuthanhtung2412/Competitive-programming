@@ -46,9 +46,23 @@ func minWindow(s string, t string) string {
 		lack[r]++
 	}
 
-	l, r := 0, 0
+	l := 0
 	resl, resr := 0, len(sr)+1
-	for l < len(sr) {
+	for r := 0; r < len(sr); r++ {
+		// if substring lack char
+		_, ok := lack[sr[r]]
+		if !ok {
+			if _, ok := extra[sr[r]]; !ok {
+				extra[sr[r]] = 0
+			}
+			extra[sr[r]]++
+		} else {
+			lack[sr[r]]--
+			if lack[sr[r]] == 0 {
+				delete(lack, sr[r])
+			}
+		}
+
 		for len(lack) == 0 {
 			if r-l < resr-resl {
 				resl, resr = l, r
@@ -64,29 +78,10 @@ func minWindow(s string, t string) string {
 
 			l++
 		}
-
-		if r >= len(sr) {
-			break
-		}
-		// if substring lack char
-		_, ok := lack[sr[r]]
-		if !ok {
-			if _, ok := extra[sr[r]]; !ok {
-				extra[sr[r]] = 0
-			}
-			extra[sr[r]]++
-		} else {
-			lack[sr[r]]--
-			if lack[sr[r]] == 0 {
-				delete(lack, sr[r])
-			}
-		}
-
-		r++
 	}
 
 	if resr > len(sr) {
 		return ""
 	}
-	return string(sr[resl:resr])
+	return string(sr[resl : resr+1])
 }

@@ -7,7 +7,7 @@ import (
 
 func main() {
 	fmt.Println("this is a test")
-	emptySliceHeader()
+	MTArrayInMap()
 }
 
 func capVsSize() {
@@ -65,6 +65,14 @@ func emptySliceHeader() {
 	fmt.Println(cap(arr))
 	arr = append(arr, 2)
 	fmt.Println(arr)
+}
+
+func MTArrayInMap() {
+	var m map[int][]int
+	a, _ := m[0]
+	fmt.Println(a)
+	a = append(a, 0)
+	fmt.Println(m[0])
 }
 
 func copyArray() {}

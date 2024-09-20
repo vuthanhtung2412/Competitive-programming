@@ -20,7 +20,7 @@ func newDeque(size int) deque {
 }
 
 func (d *deque) pushBack(num int) error {
-	if len(d.items) == d.len {
+	if d.len == len(d.items) {
 		return errFull
 	}
 	d.items[(d.head+d.len)%len(d.items)] = num
@@ -29,7 +29,7 @@ func (d *deque) pushBack(num int) error {
 }
 
 func (d *deque) popFront() (int, error) {
-	if len(d.items) == 0 {
+	if d.len == 0 {
 		return 0, errEmpty
 	}
 	res := d.items[d.head]

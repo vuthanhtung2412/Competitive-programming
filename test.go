@@ -8,7 +8,7 @@ import (
 
 func main() {
 	fmt.Println("this is a test")
-	customSort()
+	strRefOrValue()
 }
 
 func capVsSize() {
@@ -100,4 +100,13 @@ func customSort() {
 
 	// Print the sorted slice
 	fmt.Println("Sorted people:", people)
+}
+
+func strRefOrValue() {
+	s := "abc"
+	modstr := func(s string) {
+		s = "b"
+	}
+	modstr(s)
+	fmt.Println(s) // abc
 }

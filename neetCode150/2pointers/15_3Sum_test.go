@@ -32,6 +32,8 @@ func Test15(t *testing.T) {
 }
 
 func threeSum(nums []int) [][]int {
+	// fix position i and have 2 pointer left = i + 1, right = len(nums)-1
+	// adjust left and right so that the sum equal to 0
 	s := map[[3]int]struct{}{}
 	sort.Ints(nums)
 

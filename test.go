@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
+	"sort"
 	"unsafe"
 )
 
 func main() {
 	fmt.Println("this is a test")
-	MTArrayInMap()
+	customSort()
 }
 
 func capVsSize() {
@@ -75,4 +76,28 @@ func MTArrayInMap() {
 	fmt.Println(m[0])
 }
 
-func copyArray() {}
+func customSort() {
+	type Person struct {
+		Name string
+		Age  int
+	}
+
+	// Slice of structs
+	people := []Person{
+		{"Alice", 30},
+		{"Bob", 25},
+		{"Charlie", 35},
+		{"Dave", 25},
+	}
+
+	// Sort by Age (ascending), and if Ages are equal, by Name (alphabetical order)
+	sort.Slice(people, func(i, j int) bool { // if true i index come first
+		if people[i].Age == people[j].Age {
+			return people[i].Name < people[j].Name // Sort by Name if Age is equal
+		}
+		return people[i].Age < people[j].Age // Sort by Age
+	})
+
+	// Print the sorted slice
+	fmt.Println("Sorted people:", people)
+}

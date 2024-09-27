@@ -6,7 +6,7 @@ import (
 	"unsafe"
 )
 
-func main() {
+func Test() {
 	fmt.Println("this is a test")
 	strRefOrValue()
 }

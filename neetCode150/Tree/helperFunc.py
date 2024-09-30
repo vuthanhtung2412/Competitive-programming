@@ -7,14 +7,25 @@ class TreeNode:
         self.left = left
         self.right = right
 
-def sorted_list_to_bst(sorted_list):
-    if not sorted_list:
+def level_order_to_tree(level_order):
+    if not level_order:
         return None
 
-    mid = len(sorted_list) // 2
+    root = TreeNode(level_order[0])
+    queue = [root]
+    i = 1
 
-    root = TreeNode(sorted_list[mid])
-    root.left = sorted_list_to_bst(sorted_list[:mid])
-    root.right = sorted_list_to_bst(sorted_list[mid+1:])
+    while i < len(level_order):
+        current = queue.pop(0)
+
+        if i < len(level_order) and level_order[i] is not None:
+            current.left = TreeNode(level_order[i])
+            queue.append(current.left)
+        i += 1
+
+        if i < len(level_order) and level_order[i] is not None:
+            current.right = TreeNode(level_order[i])
+            queue.append(current.right)
+        i += 1
 
     return root

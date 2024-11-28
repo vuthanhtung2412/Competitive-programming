@@ -34,7 +34,6 @@ func Test127(t *testing.T) {
 }
 
 func ladderLength(beginWord string, endWord string, wordList []string) int {
-	// Diff in first, mid, last char is equal to having the same 2 other word
 	wordList = append(wordList, beginWord)
 	l := len(wordList)
 

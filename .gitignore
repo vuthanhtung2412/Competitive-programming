@@ -1,7 +1,8 @@
 .direnv/
 .idea/
 .vscode/
-.env
+.venv
+private/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]

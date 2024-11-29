@@ -59,13 +59,13 @@ func mergeSkyline(s1, s2 [][2]int) [][2]int {
 			p1++
 			p2++
 		} else if s1[p1][0] < s2[p2][0] {
-			if s1[p1][1] > h2 || (s1[p1][1] <= h2 && h1 > h2) {
+			if max(h1, h2) != max(s1[p1][1], h2) {
 				res = append(res, [2]int{s1[p1][0], max(h2, s1[p1][1])})
 			}
 			h1 = s1[p1][1]
 			p1++
 		} else {
-			if s2[p2][1] > h1 || (s2[p2][1] <= h1 && h2 > h1) {
+			if max(h1, h2) != max(s2[p2][1], h1) {
 				res = append(res, [2]int{s2[p2][0], max(h1, s2[p2][1])})
 			}
 			h2 = s2[p2][1]

@@ -30,6 +30,7 @@ func (this *RandomizedSet) Remove(val int) bool {
   if !ok {
     return false
   }
+  // The same pattern is also utilized in heap data structure
   this.s[p] = this.s[len(this.s)-1]
   this.m[this.s[p]] = p
   this.s = this.s[:len(this.s)-1]

@@ -18,26 +18,6 @@ func reversePart(runes []rune, s, e int) {
 }
 
 func removeSpaces(runes []rune) []rune {
-	// trim spaces on 2 sides
-	i := 0
-	for i < len(runes) {
-		if runes[i] == ' ' {
-			i++
-			continue
-		}
-		break
-	}
-	runes = runes[i:]
-	i = len(runes) - 1
-	for i >= 0 {
-		if runes[i] == ' ' {
-			i--
-			continue
-		}
-		break
-	}
-	runes = runes[:i+1]
-  fmt.Println(string(runes))
 	// trim intermediate extra spaces
 	wid := 0
 	for i, r := range runes {
@@ -51,6 +31,9 @@ func removeSpaces(runes []rune) []rune {
 		}
 	}
 	runes = runes[:wid]
+  if runes[0] == ' ' {
+    runes = runes[1:]
+  }
   return runes
 }
 

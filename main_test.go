@@ -3,10 +3,11 @@ package main
 import (
 	"fmt"
 	"sort"
+	"testing"
 	"unsafe"
 )
 
-func Test() {
+func Test(t *testing.T) {
 	fmt.Println("this is a test")
 	strRefOrValue()
 }

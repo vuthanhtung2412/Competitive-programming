@@ -1,4 +1,9 @@
 from typing import List
+# Ideas : 
+# l = 0, r = len(heights)-1 
+# Larger width is better
+# Larger height is better
+# Area is limited by height of the shorter wall so we lift it first
 def maxArea(height: List[int]) -> int:
     # Make the smaller pointer larger and check condition to update final result
     res = 0
